@@ -24,9 +24,13 @@ alias test-parallel='python run_tests.py --parallel'
 alias test-list='python run_tests.py --list'
 alias test-features='python run_tests.py --features'
 
+# Test execution command helper
+alias le='./show_test_commands.sh'
+
 # Show welcome message
 echo ""
 echo "🎯 Welcome to OnPager Test Framework!"
 echo "💡 Type 'ls' to see available test commands"
+echo "🧪 Type 'le' to see test execution options"
 echo "🚀 Use aliases like 'test-unit', 'test-all', etc. for quick access"
 echo ""
