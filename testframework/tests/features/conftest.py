@@ -60,7 +60,7 @@ class AdminTestDatabase:
     
     def backup_feature_states(self):
         """Backup current feature states for restoration."""
-        features = ['div_lines']  # Add more features as needed
+        features = ['construction-lines']  # Add more features as needed
         for feature in features:
             state = self.get_feature_state(feature)
             if state is not None:
@@ -149,18 +149,18 @@ def admin_test_session(admin_database, admin_webdriver):
     admin_database.set_feature_state("div_lines", "false")
 
 @pytest.fixture(scope="function")
-def div_lines_disabled(admin_database):
-    """Ensure div lines feature is disabled."""
-    admin_database.set_feature_state("div_lines", "false")
+def construction_lines_disabled(admin_database):
+    """Ensure construction lines feature is disabled."""
+    admin_database.set_feature_state("construction-lines", "false")
     yield
-    admin_database.set_feature_state("div_lines", "false")
+    admin_database.set_feature_state("construction-lines", "false")
 
 @pytest.fixture(scope="function")
-def div_lines_enabled(admin_database):
-    """Ensure div lines feature is enabled."""
-    admin_database.set_feature_state("div_lines", "true")
+def construction_lines_enabled(admin_database):
+    """Ensure construction lines feature is enabled."""
+    admin_database.set_feature_state("construction-lines", "true")
     yield
-    admin_database.set_feature_state("div_lines", "false")
+    admin_database.set_feature_state("construction-lines", "false")
 
 # Custom markers for admin tests
 def pytest_configure(config):

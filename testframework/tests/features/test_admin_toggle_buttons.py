@@ -50,21 +50,25 @@ class AdminToggleTestSuite:
         """Get current feature state from database."""
         conn = self.get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("SELECT value FROM debug_options WHERE name = ?", (feature_name,))
-        result = cursor.fetchone()
-        conn.close()
-        return result[0] if result else None
+        try:
+            cursor.execute("SELECT settings FROM debug_options WHERE value = ?", (feature_name,))
+            result = cursor.fetchone()
+            return result[0] if result else None
+        finally:
+            conn.close()
     
     def set_feature_state(self, feature_name, value):
         """Set feature state in database."""
         conn = self.get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("""
-            INSERT OR REPLACE INTO debug_options (name, value, updated_at) 
-            VALUES (?, ?, datetime('now'))
-        """, (feature_name, value))
-        conn.commit()
-        conn.close()
+        try:
+            cursor.execute("""
+                INSERT OR REPLACE INTO debug_options (value, settings) 
+                VALUES (?, ?)
+            """, (feature_name, value))
+            conn.commit()
+        finally:
+            conn.close()
 
 @pytest.mark.feature("admin_panel")
 @pytest.mark.integration
@@ -82,12 +86,12 @@ class TestAdminToggleButtons:
     @pytest.fixture(autouse=True)
     def setup_database(self):
         """Setup test database state."""
-        # Ensure div_lines feature exists and is disabled by default
+        # Ensure construction-lines feature exists and is disabled by default
         suite = AdminToggleTestSuite()
-        suite.set_feature_state("div_lines", "false")
+        suite.set_feature_state("construction-lines", "false")
         yield
         # Cleanup: reset to default state
-        suite.set_feature_state("div_lines", "false")
+        suite.set_feature_state("construction-lines", "false")
 
     def test_admin_panel_accessibility(self, admin_tests):
         """Test that admin panel is accessible and loads correctly."""
@@ -116,7 +120,7 @@ class TestAdminToggleButtons:
         assert "OFF" in status_badge.text
         
         # Verify database state
-        db_state = admin_tests.get_feature_state("div_lines")
+        db_state = admin_tests.get_feature_state("construction-lines")
         assert db_state == "false"
 
     def test_toggle_switch_enable(self, admin_tests):
@@ -144,13 +148,13 @@ class TestAdminToggleButtons:
         assert "Changes saved successfully!" in success_msg.text
         
         # Verify database state is updated
-        db_state = admin_tests.get_feature_state("div_lines")
+        db_state = admin_tests.get_feature_state("construction-lines")
         assert db_state == "true"
 
     def test_toggle_switch_disable(self, admin_tests):
         """Test disabling the div lines feature."""
         # First enable the feature
-        admin_tests.set_feature_state("div_lines", "true")
+        admin_tests.set_feature_state("construction-lines", "true")
         
         admin_tests.driver.get(admin_tests.admin_url)
         
@@ -175,7 +179,7 @@ class TestAdminToggleButtons:
         assert "Changes saved successfully!" in success_msg.text
         
         # Verify database state is updated
-        db_state = admin_tests.get_feature_state("div_lines")
+        db_state = admin_tests.get_feature_state("construction-lines")
         assert db_state == "false"
 
     def test_toggle_switch_visual_states(self, admin_tests):
@@ -201,10 +205,10 @@ class TestAdminToggleButtons:
     def test_database_persistence(self, admin_tests):
         """Test that feature state persists in database across sessions."""
         # Set feature to enabled
-        admin_tests.set_feature_state("div_lines", "true")
+        admin_tests.set_feature_state("construction-lines", "true")
         
         # Verify database state
-        db_state = admin_tests.get_feature_state("div_lines")
+        db_state = admin_tests.get_feature_state("construction-lines")
         assert db_state == "true"
         
         # Reload admin panel
@@ -319,12 +323,12 @@ class TestAdminToggleUnitTests:
         suite = AdminToggleTestSuite()
         
         # Test setting feature state
-        suite.set_feature_state("div_lines", "true")
-        assert suite.get_feature_state("div_lines") == "true"
+        suite.set_feature_state("construction-lines", "true")
+        assert suite.get_feature_state("construction-lines") == "true"
         
         # Test updating feature state
-        suite.set_feature_state("div_lines", "false")
-        assert suite.get_feature_state("div_lines") == "false"
+        suite.set_feature_state("construction-lines", "false")
+        assert suite.get_feature_state("construction-lines") == "false"
         
         # Test non-existent feature
         assert suite.get_feature_state("non_existent") is None
@@ -334,11 +338,11 @@ class TestAdminToggleUnitTests:
         suite = AdminToggleTestSuite()
         
         # Test valid states
-        suite.set_feature_state("div_lines", "true")
-        suite.set_feature_state("div_lines", "false")
+        suite.set_feature_state("construction-lines", "true")
+        suite.set_feature_state("construction-lines", "false")
         
         # Test invalid states (should be handled gracefully)
-        suite.set_feature_state("div_lines", "invalid")
+        suite.set_feature_state("construction-lines", "invalid")
         # This should either be rejected or defaulted to a valid state
 
 @pytest.mark.feature("admin_panel")
@@ -359,7 +363,7 @@ class TestAdminToggleRegressionTests:
         
         # Verify final state is consistent
         final_state = toggle_switch.is_selected()
-        db_state = admin_tests.get_feature_state("div_lines")
+        db_state = admin_tests.get_feature_state("construction-lines")
         
         # State should be consistent between UI and database
         assert (final_state and db_state == "true") or (not final_state and db_state == "false")
@@ -367,7 +371,7 @@ class TestAdminToggleRegressionTests:
     def test_session_persistence(self, admin_tests):
         """Test that feature state persists across browser sessions."""
         # Set feature state
-        admin_tests.set_feature_state("div_lines", "true")
+        admin_tests.set_feature_state("construction-lines", "true")
         
         # Close and reopen browser (simulate new session)
         admin_tests.driver.quit()
