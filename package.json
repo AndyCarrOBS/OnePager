@@ -1,0 +1,13 @@
+{
+  "name": "onpager",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "./scripts/start-servers.sh",
+    "stop": "./scripts/stop-servers.sh"
+  },
+  "keywords": ["onpager", "unified-app"],
+  "author": "",
+  "license": "ISC"
+} 
