@@ -49,10 +49,16 @@ export default function HomePage() {
     <div className="relative min-h-screen font-noto-sans overflow-hidden">
       {/* Single background gradient that covers everything */}
       <div 
-        className="custom-background"
         style={{
-          background: 'linear-gradient(135deg, #221d3c 0%, rgba(92, 79, 162, 0.4) 100%)',
-          zIndex: 0
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          width: '100vw',
+          height: '100vh',
+          background: 'linear-gradient(135deg, #1a0f2e 0%, #2d1b4e 50%, #4c2a8a 100%)',
+          zIndex: -1
         }}
       ></div>
 
