@@ -1,0 +1,141 @@
+/* ContentTeaserSection.css - Local styles for the content teaser section */
+
+.content-teaser-section {
+  /* Base section styles */
+  --content-teaser-padding: 80px 0;
+  --content-teaser-max-width: 72rem;
+  --content-teaser-text-color: white;
+  --content-teaser-heading-size: 2.5rem;
+  --content-teaser-description-size: 24px;
+  --content-teaser-button-bg: #d9d9d9;
+  --content-teaser-button-shadow: 0px 4px 6px #0000002e;
+  --content-teaser-button-hover-scale: 1.05;
+  --content-teaser-transition-duration: 0.2s;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 768px) {
+  .content-teaser-section {
+    --content-teaser-padding: 60px 0;
+    --content-teaser-heading-size: 2rem;
+    --content-teaser-description-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .content-teaser-section {
+    --content-teaser-padding: 40px 0;
+    --content-teaser-heading-size: 1.75rem;
+    --content-teaser-description-size: 18px;
+  }
+}
+
+/* Enhanced button styles */
+.content-teaser-button {
+  position: relative;
+  overflow: hidden;
+  transition: all var(--content-teaser-transition-duration) ease;
+}
+
+.content-teaser-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.content-teaser-button:hover::before {
+  left: 100%;
+}
+
+/* Image enhancement styles */
+.content-teaser-image {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.content-teaser-image:hover {
+  transform: scale(1.02);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Text animation styles */
+.content-teaser-heading {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.content-teaser-description {
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+.content-teaser-image-container {
+  animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+.content-teaser-button-container {
+  animation: fadeInUp 0.8s ease-out 0.6s both;
+}
+
+/* Keyframe animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Focus states for accessibility */
+.content-teaser-button:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
+/* Loading state styles */
+.content-teaser-loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.content-teaser-loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .content-teaser-section {
+    --content-teaser-text-color: #ffffff;
+    --content-teaser-button-bg: #ffffff;
+    --content-teaser-button-shadow: 0px 4px 6px #000000;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .content-teaser-section * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

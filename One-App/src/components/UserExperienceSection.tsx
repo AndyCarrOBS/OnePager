@@ -111,25 +111,31 @@ export default function UserExperienceSection() {
       }}>
         {/* Main Heading */}
         <h1 style={{
-          fontSize: '3rem',
-          fontWeight: 'bold',
+          fontSize: '3.5rem',
+          fontWeight: '800',
           color: 'white',
           marginBottom: '32px',
-          lineHeight: '1.2',
-          fontFamily: '"Noto Sans", Helvetica, sans-serif'
+          lineHeight: '1.1',
+          fontFamily: '"Noto Sans", Helvetica, sans-serif',
+          textShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
+          background: 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text'
         }}>
           {displayData.title}
         </h1>
 
         {/* Subtitle */}
         <p style={{
-          fontSize: '24px',
+          fontSize: '26px',
           fontWeight: '400',
-          lineHeight: '36px',
-          color: 'rgba(255, 255, 255, 0.9)',
-          maxWidth: '64rem',
+          lineHeight: '1.5',
+          color: 'rgba(255, 255, 255, 0.95)',
+          maxWidth: '68rem',
           margin: '0 auto 64px',
-          fontFamily: '"Noto Sans", Helvetica, sans-serif'
+          fontFamily: '"Noto Sans", Helvetica, sans-serif',
+          textShadow: '0 2px 4px rgba(0, 0, 0, 0.2)'
         }}>
           {displayData.subtitle}
         </p>
@@ -138,56 +144,70 @@ export default function UserExperienceSection() {
         <div style={{
           display: 'flex',
           justifyContent: 'center',
-          marginBottom: '64px'
+          marginBottom: '64px',
+          padding: '0 24px'
         }}>
-          {/* Image Container with centered positioning */}
+          {/* Image Container with enhanced positioning and effects */}
           <div style={{
             position: 'relative',
-            maxWidth: '64rem',
+            maxWidth: '72rem',
             width: '100%'
           }}>
-            {/* Glow effect - positioned behind the content */}
+            {/* Enhanced glow effect - positioned behind the content */}
             <div style={{
               position: 'absolute',
               inset: 0,
-              background: 'linear-gradient(to right, rgba(147, 51, 234, 0.3), rgba(59, 130, 246, 0.3), rgba(147, 51, 234, 0.3))',
-              borderRadius: '24px',
-              filter: 'blur(16px)',
-              transform: 'scale(1.1)',
-              zIndex: -10
+              background: 'linear-gradient(135deg, rgba(147, 51, 234, 0.4), rgba(59, 130, 246, 0.4), rgba(147, 51, 234, 0.4))',
+              borderRadius: '32px',
+              filter: 'blur(20px)',
+              transform: 'scale(1.15)',
+              zIndex: -10,
+              animation: 'pulse 3s ease-in-out infinite alternate'
             }}></div>
             
-            {/* Content container - properly centered */}
+            {/* Enhanced content container */}
             <div style={{
               position: 'relative',
-              background: '#111827',
-              borderRadius: '24px',
-              padding: '32px',
-              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-              border: '1px solid rgba(147, 51, 234, 0.3)'
+              background: 'linear-gradient(135deg, #1f2937 0%, #111827 100%)',
+              borderRadius: '32px',
+              padding: '40px',
+              boxShadow: '0 32px 64px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(147, 51, 234, 0.2)',
+              border: '1px solid rgba(147, 51, 234, 0.3)',
+              backdropFilter: 'blur(10px)'
             }}>
-              {/* Image - centered within the container */}
+              {/* Image - enhanced with better styling */}
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                position: 'relative'
               }}>
                 <img
-                  src="/img/1-2345685.png"
+                  src="/img/Hero-Image.webp"
                   alt="OORO TV Platform interface showing streaming content for MENA region"
                   style={{
                     width: '100%',
                     height: 'auto',
-                    maxHeight: '500px',
+                    maxHeight: '600px',
                     objectFit: 'cover',
-                    borderRadius: '16px'
+                    borderRadius: '20px',
+                    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
+                    transition: 'transform 0.3s ease, box-shadow 0.3s ease'
                   }}
                   onError={(e) => {
-                    console.error('Image failed to load: /img/1-2345685.png');
+                    console.error('Image failed to load: /img/Hero-Image.webp');
                     e.currentTarget.style.display = 'none';
                   }}
                   onLoad={() => {
-                    console.log('Image loaded successfully: /img/1-2345685.png');
+                    console.log('Image loaded successfully: /img/Hero-Image.webp');
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'scale(1.02)';
+                    e.currentTarget.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.4)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)';
+                    e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.3)';
                   }}
                 />
               </div>
@@ -197,19 +217,34 @@ export default function UserExperienceSection() {
 
         {/* Call to Action Button */}
         <div style={{ marginBottom: '48px' }}>
-          <a href={displayData.button_url} style={{
-            background: '#9333ea',
-            color: 'white',
-            fontWeight: '600',
-            padding: '16px 48px',
-            fontSize: '1.25rem',
-            border: 'none',
-            cursor: 'pointer',
-            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-            transition: 'all 0.2s',
-            textDecoration: 'none',
-            display: 'inline-block'
-          }}>
+          <a 
+            href={displayData.button_url} 
+            style={{
+              background: 'linear-gradient(135deg, #9333ea 0%, #7c3aed 100%)',
+              color: 'white',
+              fontWeight: '600',
+              padding: '18px 56px',
+              fontSize: '1.25rem',
+              border: 'none',
+              cursor: 'pointer',
+              boxShadow: '0 10px 25px -3px rgba(147, 51, 234, 0.3), 0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+              textDecoration: 'none',
+              display: 'inline-block',
+              fontFamily: '"Noto Sans", Helvetica, sans-serif',
+              borderRadius: '12px',
+              position: 'relative',
+              overflow: 'hidden'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 20px 40px -3px rgba(147, 51, 234, 0.4), 0 8px 12px -1px rgba(0, 0, 0, 0.15)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 10px 25px -3px rgba(147, 51, 234, 0.3), 0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+            }}
+          >
             {displayData.button_text}
           </a>
         </div>

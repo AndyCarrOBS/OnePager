@@ -2,7 +2,9 @@
 
 import MenuBar from '@/components/MenuBar';
 import UserExperienceSection from '@/components/UserExperienceSection';
+import ContentTeaserSection from '@/components/ContentTeaserSection';
 import KeyFeaturesSection from '@/components/KeyFeaturesSection';
+import OurProductsSection from '@/components/OurProductsSection';
 import { useFeatures } from '@/contexts/FeatureContext';
 import { useEffect, useState } from 'react';
 
@@ -72,6 +74,12 @@ export default function HomePage() {
 
       {/* Key Features Section */}
       <KeyFeaturesSection />
+
+      {/* Our Products Section */}
+      <OurProductsSection />
+
+      {/* Content Teaser Section */}
+      <ContentTeaserSection />
 
       {/* Body Section - Adjusted for absolute MenuBar */}
       <main className="relative z-10">
