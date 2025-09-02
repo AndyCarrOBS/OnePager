@@ -39,7 +39,7 @@ class AdminTestDatabase:
         conn = self.get_connection()
         cursor = conn.cursor()
         try:
-            cursor.execute("SELECT value FROM debug_options WHERE name = ?", (feature_name,))
+            cursor.execute("SELECT settings FROM debug_options WHERE value = ?", (feature_name,))
             result = cursor.fetchone()
             return result[0] if result else None
         finally:
@@ -51,8 +51,8 @@ class AdminTestDatabase:
         cursor = conn.cursor()
         try:
             cursor.execute("""
-                INSERT OR REPLACE INTO debug_options (name, value, updated_at) 
-                VALUES (?, ?, datetime('now'))
+                INSERT OR REPLACE INTO debug_options (value, settings) 
+                VALUES (?, ?)
             """, (feature_name, value))
             conn.commit()
         finally:

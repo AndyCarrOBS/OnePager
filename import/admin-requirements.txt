@@ -37,6 +37,51 @@ SECTIONS TO MANAGE
 - Call to Action
 - Footer navigation
 
+TEXT CONTENT TO MANAGE
+---------------------
+HEADER
+- Navigation items: "About OORO", "Devices", "Content", "Where to Buy"
+- Login button text
+
+USER EXPERIENCE SECTION
+- Main heading: "First TV Platform For MENA"
+- Subtitle: "Stream, discover, and enjoy content in Arabic with OORO-powered devices designed for the Middle East and North Africa"
+
+FEATURED CONTENT SECTION
+- Heading: "Don't Miss This Show"
+- Description: "Browse movies, episodes, live TV, and more from across your favorite apps. It's easier than ever to discover what to watch."
+- Button: "Explore now"
+
+KEY FEATURES SECTION
+- Feature 1: "Entertainment Apps" - "Youtube, shahid, Watch it and so much more"
+- Feature 2: "OORO Cast" - "Lorem Ipsum Lorem Ipsum\nLorem Ipsum"
+- Feature 3: "OORO Browser" - "Lorem Ipsum Lorem Ipsum\nLorem Ipsum"
+- Feature 4: "OORO Media player" - "Lorem Ipsum Lorem Ipsum\nLorem Ipsum"
+
+ENTERTAINMENT APPS SECTION
+- Heading: "Entertainment apps"
+- Subtitle: "Biggest streaming services in MENA are available now"
+- App names: YouTube, Netflix, VIU, Wavo, Shahid
+
+STATISTICS SECTION
+- Stat 1: "50+" - "Arabic Channels"
+- Stat 2: "1M+" - "Hours Watched"
+
+FIRST TV PLATFORM MENA SECTION
+- Heading: "Let's Connect"
+- Description: "Discover partnership opportunities with OORO and get your content viewed even more"
+- Button: "Let's connect"
+
+PARTNERS SECTION
+- Heading: "Our Partners"
+
+FOOTER
+- Tagline: "Questions? Comments? Concerns?"
+- Copyright: "© 2025 Transparent. All rights reserved."
+- Navigation links: "About OORO", "Devices", "Content", "Where to Buy"
+- Legal links: "Privacy Policy", "Terms & Conditions"
+- Support links: "F.A.Qs"
+
 TECHNICAL REQUIREMENTS
 ---------------------
 - React-based admin interface

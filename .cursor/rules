@@ -1,0 +1,8 @@
+{
+  "rules": [
+    {
+      "when": "running terminal commands",
+      "do": "prepend 'cd /home/andy/cursor/obs-cur/work/onpager/One-App' before any command"
+    }
+  ]
+}
