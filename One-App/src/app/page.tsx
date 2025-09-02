@@ -49,10 +49,10 @@ export default function HomePage() {
     <div className="relative min-h-screen font-noto-sans overflow-hidden">
       {/* Single background gradient that covers everything */}
       <div 
-        className="absolute inset-0"
+        className="custom-background"
         style={{
           background: 'linear-gradient(135deg, #221d3c 0%, rgba(92, 79, 162, 0.4) 100%)',
-          zIndex: 1
+          zIndex: 0
         }}
       ></div>
 
@@ -60,14 +60,12 @@ export default function HomePage() {
       <MenuBar />
 
       {/* User Experience Section - Hero section under the menu */}
-      <div className="pt-[25px] relative z-10">
+      <div className="pt-[25px]">
         <UserExperienceSection />
       </div>
 
       {/* Key Features Section */}
-      <div className="relative z-10">
-        <KeyFeaturesSection />
-      </div>
+      <KeyFeaturesSection />
 
       {/* Body Section - Adjusted for absolute MenuBar */}
       <main className="relative z-10">
