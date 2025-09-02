@@ -44,6 +44,33 @@ export function initDatabase(): void {
       )
     `);
 
+    // Create home-key-features table
+    db.exec(`
+      CREATE TABLE IF NOT EXISTS home_key_features (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        subtitle TEXT NOT NULL,
+        feature1_image TEXT NOT NULL,
+        feature1_title TEXT NOT NULL,
+        feature1_subtitle TEXT NOT NULL,
+        feature1_url TEXT NOT NULL,
+        feature2_image TEXT NOT NULL,
+        feature2_title TEXT NOT NULL,
+        feature2_subtitle TEXT NOT NULL,
+        feature2_url TEXT NOT NULL,
+        feature3_image TEXT NOT NULL,
+        feature3_title TEXT NOT NULL,
+        feature3_subtitle TEXT NOT NULL,
+        feature3_url TEXT NOT NULL,
+        feature4_image TEXT NOT NULL,
+        feature4_title TEXT NOT NULL,
+        feature4_subtitle TEXT NOT NULL,
+        feature4_url TEXT NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
     // Insert initial data if debug_options table is empty
     const count = db.prepare('SELECT COUNT(*) as count FROM debug_options').get() as { count: number };
     console.log(`Current debug options count: ${count.count}`);
@@ -93,6 +120,48 @@ export function initDatabase(): void {
       console.log('Database initialized with home entertainment content');
     } else {
       console.log('Home entertainment table already has data, skipping initialization');
+    }
+
+    // Insert home key features content if table is empty
+    const keyFeaturesCount = db.prepare('SELECT COUNT(*) as count FROM home_key_features').get() as { count: number };
+    console.log(`Current home key features count: ${keyFeaturesCount.count}`);
+    
+    if (keyFeaturesCount.count === 0) {
+      const insertKeyFeatures = db.prepare(`
+        INSERT OR IGNORE INTO home_key_features (
+          title, subtitle,
+          feature1_image, feature1_title, feature1_subtitle, feature1_url,
+          feature2_image, feature2_title, feature2_subtitle, feature2_url,
+          feature3_image, feature3_title, feature3_subtitle, feature3_url,
+          feature4_image, feature4_title, feature4_subtitle, feature4_url
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `);
+      
+      // Insert current content from the KeyFeaturesSection
+      insertKeyFeatures.run(
+        'Key Features',
+        'Discover the powerful features that make OORO the ultimate TV platform for MENA',
+        '/img/vector-4.svg',
+        'Entertainment Apps',
+        'Youtube , shahid , Watch it and so much more',
+        '/entertainment',
+        '/img/frame-1618872926.svg',
+        'OORO Cast',
+        'Lorem Ipsum Lorem Ipsum Lorem Ipsum',
+        '/cast',
+        '/img/vector-2.svg',
+        'OORO Browser',
+        'Lorem Ipsum Lorem Ipsum Lorem Ipsum',
+        '/browser',
+        '/img/vector-4.svg',
+        'OORO Media player',
+        'Lorem Ipsum Lorem Ipsum Lorem Ipsum',
+        '/media-player'
+      );
+      
+      console.log('Database initialized with home key features content');
+    } else {
+      console.log('Home key features table already has data, skipping initialization');
     }
     
     // Verify the data
@@ -202,6 +271,32 @@ export function closeDatabase(): void {
   if (db) {
     db.close();
     console.log('Database connection closed');
+  }
+}
+
+// Get home key features content
+export function getHomeKeyFeatures(): any {
+  try {
+    console.log('getHomeKeyFeatures: Starting...');
+    console.log('getHomeKeyFeatures: Database path:', dbPath);
+    console.log('getHomeKeyFeatures: Database object:', db);
+    
+    const stmt = db.prepare('SELECT * FROM home_key_features ORDER BY id DESC LIMIT 1');
+    console.log('getHomeKeyFeatures: Statement prepared');
+    
+    const result = stmt.get();
+    console.log('getHomeKeyFeatures: Query result:', result);
+    
+    if (result && result.id > 0) {
+      console.log('getHomeKeyFeatures: Found data with id > 0');
+    } else {
+      console.log('getHomeKeyFeatures: No data found or id <= 0');
+    }
+    
+    return result;
+  } catch (error) {
+    console.error('getHomeKeyFeatures: Error:', error);
+    return null;
   }
 }
 

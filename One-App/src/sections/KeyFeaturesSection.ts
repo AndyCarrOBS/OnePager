@@ -59,7 +59,7 @@ export const keyFeaturesSection: KeyFeaturesSection = {
       {
         id: 2,
         title: 'OORO Cast',
-        description: 'Lorem Ipsum Lorem Ipsum\nLorem Ipsum',
+        description: 'Share photos, videos, and more on the big screen',
         icon: {
           type: 'frame',
           src: '/img/frame-1618872926.svg',
@@ -69,7 +69,7 @@ export const keyFeaturesSection: KeyFeaturesSection = {
       {
         id: 3,
         title: 'OORO Browser',
-        description: 'Lorem Ipsum Lorem Ipsum\nLorem Ipsum',
+        description: 'Search the web directly from your TV',
         icon: {
           type: 'complex',
           elements: [
@@ -88,7 +88,7 @@ export const keyFeaturesSection: KeyFeaturesSection = {
       {
         id: 4,
         title: 'OORO Media player',
-        description: 'Lorem Ipsum Lorem Ipsum\nLorem Ipsum',
+        description: 'Play Music or watch videos offline now on your TV',
         icon: {
           type: 'image',
           src: '/img/vector-4.svg',

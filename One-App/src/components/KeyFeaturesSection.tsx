@@ -59,7 +59,11 @@ export default function KeyFeaturesSection() {
           <div style={{
             position: 'relative',
             width: '48px',
-            height: '48px'
+            height: '48px',
+            // Special positioning for OORO Browser (feature 3)
+            ...(feature.id === 3 && {
+              transform: 'translateX(-20px)'
+            })
           }}>
             {icon.elements?.map((element: { src: string; className: string }, index) => (
               <img
