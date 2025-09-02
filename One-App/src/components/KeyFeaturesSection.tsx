@@ -90,17 +90,10 @@ export default function KeyFeaturesSection() {
         alignItems: 'center',
         justifyContent: 'flex-start',
         overflow: 'hidden',
-        padding: '80px 0',
-        background: 'linear-gradient(135deg, #0e0614 0%, #1a0f2e 50%, #2d1b4e 100%)'
+        padding: '80px 0'
+        // Removed background - now uses main page background
       }}
     >
-      {/* Background gradient overlay */}
-      <div style={{
-        position: 'absolute',
-        inset: 0,
-        background: 'linear-gradient(to bottom right, rgba(147, 51, 234, 0.2), rgba(59, 130, 246, 0.2))'
-      }}></div>
-
       {/* Content Container */}
       <div style={{
         position: 'relative',
@@ -141,7 +134,7 @@ export default function KeyFeaturesSection() {
           gridTemplateColumns: `repeat(${gridColumns}, 1fr)`,
           gap: `${gridGap}px`,
           width: '100%',
-          maxWidth: '100%',
+          maxWidth: '1200px',
           margin: '0 auto'
         }}>
           {content.features.map((feature) => (

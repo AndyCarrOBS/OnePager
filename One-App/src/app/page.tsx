@@ -47,15 +47,10 @@ export default function HomePage() {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-[#221d3c] to-[#5c4fa2]/40 font-noto-sans overflow-hidden">
-      {/* Background gradient that covers everything */}
+      {/* Single background gradient that covers everything */}
       <div 
-        className="fixed inset-0 bg-gradient-to-br from-[#221d3c] to-[#5c4fa2]/40 -z-10"
+        className="fixed inset-0 -z-10"
         style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
           background: 'linear-gradient(135deg, #221d3c 0%, rgba(92, 79, 162, 0.4) 100%)',
           zIndex: -10
         }}
@@ -102,16 +97,34 @@ export default function HomePage() {
               </div>
             )}
 
+            {/* Grid Overlay Feature Indicator */}
+            {isMounted && isFeatureEnabled('grid-overlay') && (
+              <div className="mt-8 p-6 border-2 border-blue-300 bg-blue-50/20 rounded-xl">
+                <div className="flex items-center justify-center space-x-3 mb-3">
+                  <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse"></div>
+                  <h3 className="text-lg font-semibold text-blue-200">Grid Overlay Feature: ENABLED</h3>
+                  <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse"></div>
+                </div>
+                <p className="text-blue-200 text-sm leading-relaxed">
+                  📐 Grid overlay is now visible! You can see the underlying grid system for layout guidance.
+                  <br />
+                  <span className="text-blue-300 font-medium">
+                    Toggle this feature in the admin panel and reload the page to see changes.
+                  </span>
+                </p>
+              </div>
+            )}
+
             {/* Menu Columns Feature Indicator */}
             {isMounted && isFeatureEnabled('menu-columns') && (
-              <div className="mt-6 p-6 border-2 border-green-300 bg-green-50/20 rounded-xl">
+              <div className="mt-8 p-6 border-2 border-green-300 bg-green-50/20 rounded-xl">
                 <div className="flex items-center justify-center space-x-3 mb-3">
                   <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
                   <h3 className="text-lg font-semibold text-green-200">Menu Columns Feature: ENABLED</h3>
                   <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
                 </div>
                 <p className="text-green-200 text-sm leading-relaxed">
-                  🎨 Menu column shading is now visible! You can see blue, green, and red borders in the menu bar.
+                  🍔 Menu columns are now visible! You can see the columnar layout in the menu bar.
                   <br />
                   <span className="text-green-300 font-medium">
                     Toggle this feature in the admin panel and reload the page to see changes.
@@ -119,15 +132,6 @@ export default function HomePage() {
                 </p>
               </div>
             )}
-            
-            <div className="mt-8">
-              <a 
-                href="/admin" 
-                className="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
-              >
-                Access Admin Panel
-              </a>
-            </div>
           </div>
         </div>
       </main>
