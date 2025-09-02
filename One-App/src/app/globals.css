@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Ensure no default backgrounds interfere with our custom background */
+html, body {
+  background: transparent !important;
+}
+
 /* CSS Variables for Feature Toggles */
   :root {
   --show-construction-lines: 0;

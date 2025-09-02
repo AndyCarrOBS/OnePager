@@ -46,13 +46,12 @@ export default function HomePage() {
   }, [isFeatureEnabled]);
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-[#221d3c] to-[#5c4fa2]/40 font-noto-sans overflow-hidden">
+    <div className="relative min-h-screen font-noto-sans overflow-hidden">
       {/* Single background gradient that covers everything */}
       <div 
-        className="fixed inset-0 -z-10"
+        className="absolute inset-0 -z-10"
         style={{
-          background: 'linear-gradient(135deg, #221d3c 0%, rgba(92, 79, 162, 0.4) 100%)',
-          zIndex: -10
+          background: 'linear-gradient(135deg, #221d3c 0%, rgba(92, 79, 162, 0.4) 100%)'
         }}
       ></div>
 
