@@ -165,11 +165,13 @@ export function initDatabase(): void {
     }
     
     // Verify the data
-    const options = getDebugOptions();
-    console.log('Current debug options:', options);
+    // Remove these calls to avoid circular dependency
+    // const options = getDebugOptions();
+    // console.log('Current debug options:', options);
     
-    const homeContent = getHomeEntertainment();
-    console.log('Current home entertainment content:', homeContent);
+    // Remove these calls to avoid circular dependency
+    // const homeContent = getHomeEntertainment();
+    // console.log('Current home entertainment content:', homeContent);
     
   } catch (error) {
     console.error('Database initialization error:', error);
@@ -281,11 +283,23 @@ export function getHomeKeyFeatures(): any {
     console.log('getHomeKeyFeatures: Database path:', dbPath);
     console.log('getHomeKeyFeatures: Database object:', db);
     
+    // Check if table exists
+    const tableCheck = db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='home_key_features'");
+    const tableExists = tableCheck.get();
+    console.log('getHomeKeyFeatures: Table exists check:', tableExists);
+    
+    // Count rows in table
+    const countStmt = db.prepare('SELECT COUNT(*) as count FROM home_key_features');
+    const count = countStmt.get() as { count: number };
+    console.log('getHomeKeyFeatures: Row count:', count);
+    
     const stmt = db.prepare('SELECT * FROM home_key_features ORDER BY id DESC LIMIT 1');
     console.log('getHomeKeyFeatures: Statement prepared');
     
-    const result = stmt.get();
+    const result = stmt.get() as { id: number } | undefined;
     console.log('getHomeKeyFeatures: Query result:', result);
+    console.log('getHomeKeyFeatures: Result type:', typeof result);
+    console.log('getHomeKeyFeatures: Result keys:', result ? Object.keys(result) : 'null');
     
     if (result && result.id > 0) {
       console.log('getHomeKeyFeatures: Found data with id > 0');
@@ -300,4 +314,4 @@ export function getHomeKeyFeatures(): any {
   }
 }
 
-export default db;
+// export default db;

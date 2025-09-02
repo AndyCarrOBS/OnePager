@@ -74,7 +74,7 @@ export const keyFeaturesSection: KeyFeaturesSection = {
           type: 'complex',
           elements: [
             {
-              src: '/img/vector-2.svg',
+              src: '/img/world.png',
               className: 'absolute w-3 h-7 top-0 left-[7px]',
             },
             {
