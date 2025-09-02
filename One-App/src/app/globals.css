@@ -7,6 +7,17 @@ html, body {
   background: transparent !important;
 }
 
+/* Ensure our custom background is visible */
+.custom-background {
+  background: linear-gradient(135deg, #221d3c 0%, rgba(92, 79, 162, 0.4) 100%) !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 0 !important;
+}
+
 /* CSS Variables for Feature Toggles */
   :root {
   --show-construction-lines: 0;
