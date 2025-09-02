@@ -51,7 +51,7 @@ const MenuBar: React.FC = () => {
         >
           {/* Logo - Left column (3 columns) */}
           <div 
-            className="col-span-3 flex items-center justify-start"
+            className="col-span-3 flex items-center justify-start logo-container"
             style={{
               gridColumn: 'span 3 / span 3',
               display: 'flex',
@@ -59,18 +59,23 @@ const MenuBar: React.FC = () => {
               justifyContent: 'flex-start',
               paddingLeft: '10px',
               border: showMenuColumns ? '2px solid red' : 'none',
-              backgroundColor: showMenuColumns ? 'rgba(255, 0, 0, 0.1)' : 'transparent'
+              backgroundColor: showMenuColumns ? 'rgba(255, 0, 0, 0.1)' : 'transparent',
+              minHeight: '36px',
+              minWidth: '143px'
             }}
           >
             <img
-              className="h-[28px] w-[110px] object-contain"
+              className="h-[36px] w-[143px] object-contain"
               alt="OORO logo"
               src="/img/ooro-logo-1.png"
               style={{
-                height: '28px',
-                width: '110px',
+                height: '36px',
+                width: '143px',
                 objectFit: 'contain',
-                maxWidth: '100%'
+                maxWidth: '100%',
+                transform: 'none',
+                transformOrigin: 'center',
+                backfaceVisibility: 'hidden'
               }}
             />
           </div>

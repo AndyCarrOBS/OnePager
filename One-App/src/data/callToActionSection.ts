@@ -3,8 +3,8 @@ export const callToActionSectionData = {
     logo: {
       src: '/img/ooro-logo-1-2.png',
       alt: 'Ooro logo',
-      width: 120,
-      height: 28,
+      width: 156,
+      height: 36.4,
     },
     tagline: 'Questions? Comments? Concerns?',
     navigation: {

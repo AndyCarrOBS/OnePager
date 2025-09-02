@@ -9,8 +9,8 @@ export const userExperienceSectionData = {
     brandLogo: {
       src: '/img/frame-1618873226.png',
       alt: 'OORO brand logo',
-      width: 291,
-      height: 51,
+      width: 378,
+      height: 66.3,
     },
   },
   styles: {

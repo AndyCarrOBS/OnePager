@@ -11,8 +11,8 @@ export interface HeaderSection {
     logo: {
       src: '/img/ooro-logo-1.png';
       alt: 'OORO logo';
-      width: 120;
-      height: 28.31;
+      width: 156;
+      height: 36.8;
     };
     navigation: {
       items: Array<{
@@ -46,8 +46,8 @@ export const headerSection: HeaderSection = {
     logo: {
       src: '/img/ooro-logo-1.png',
       alt: 'OORO logo',
-      width: 120,
-      height: 28.31,
+      width: 156,
+      height: 36.8,
     },
     navigation: {
       items: [

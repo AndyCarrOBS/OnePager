@@ -96,14 +96,19 @@ export default function ContentTeaserSection() {
         </div>
 
         {/* Call to Action Button */}
-        <div className="content-teaser-button-container" style={{ marginBottom: '32px' }}>
+        <div className="content-teaser-button-container" style={{ 
+          marginBottom: '32px',
+          display: 'flex',
+          justifyContent: 'center',
+          width: '100%'
+        }}>
           <button
             className="content-teaser-button"
             style={{
               width: `${content.ctaButton.width}px`,
               height: `${content.ctaButton.height}px`,
               background: styles.buttonBackground,
-              color: '#000',
+              color: '#fff',
               fontWeight: '400',
               fontSize: '16px',
               border: 'none',

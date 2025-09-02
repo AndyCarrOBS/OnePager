@@ -56,7 +56,7 @@ export const contentTeaserSection: ContentTeaserSection = {
   styles: {
     background: 'transparent',
     textColor: 'white',
-    buttonBackground: '#d9d9d9',
+    buttonBackground: '#9333ea',
     buttonShadow: '0px 4px 6px #0000002e',
     buttonHoverEffect: 'scale(1.05)',
   },
