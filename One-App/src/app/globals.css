@@ -2,224 +2,269 @@
 @tailwind components;
 @tailwind utilities;
 
+/* CSS Variables for Feature Toggles */
+:root {
+  --show-construction-lines: 0;
+  --show-grid-overlay: 0;
+  --enable-animations: 1;
+  --purple: #9C27B0; /* Material Purple 500 */
+}
+
+/* Material Design Toggle Switch Styles */
+.md-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+  line-height: 1;
+}
+
+.md-switch input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.track {
+  position: relative;
+  width: 56px;
+  height: 32px;
+  border-radius: 9999px;
+  background: #E5E7EB;
+  transition: background 160ms ease, box-shadow 160ms ease;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06);
+}
+
+.thumb {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 24px;
+  height: 24px;
+  background: #fff;
+  border-radius: 9999px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+  transition: transform 160ms ease;
+}
+
+/* Checked state */
+.md-switch input:checked + .track {
+  background: var(--purple);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06);
+}
+
+.md-switch input:checked + .track .thumb {
+  transform: translateX(24px);
+}
+
+/* Focus ring for keyboard users */
+.md-switch input:focus-visible + .track {
+  outline: 3px solid rgba(156,39,176,0.35);
+  outline-offset: 3px;
+}
+
+/* Feature-based styles */
+[data-feature="construction-lines"] {
+  border: calc(2px * var(--show-construction-lines)) solid rgba(59, 130, 246, 0.5);
+  background-color: rgba(59, 130, 246, 0.1 * var(--show-construction-lines));
+}
+
+[data-feature="grid-overlay"] {
+  background-image: 
+    linear-gradient(rgba(34, 197, 94, 0.2 * var(--show-grid-overlay)) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 197, 94, 0.2 * var(--show-grid-overlay)) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Animation control */
+* {
+  transition-duration: calc(0.3s * var(--enable-animations));
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark mode support */
+.dark {
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+  color: rgb(243 244 246 / var(--tw-bg-opacity));
+}
+
+/* Custom font classes */
+.font-noto-sans {
+  font-family: 'Noto Sans', Helvetica, sans-serif;
+}
+
+/* Feature toggle indicators */
+.feature-indicator {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.feature-indicator.enabled {
+  background: rgba(34, 197, 94, 0.9);
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.feature-indicator.disabled {
+  background: rgba(239, 68, 68, 0.9);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+/* Construction lines feature */
+.construction-lines {
+  position: relative;
+}
+
+.construction-lines::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px dashed rgba(59, 130, 246, 0.5);
+  pointer-events: none;
+  opacity: var(--show-construction-lines);
+  transition: opacity 0.3s ease;
+}
+
+/* Grid overlay feature */
+.grid-overlay {
+  position: relative;
+}
+
+.grid-overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(34, 197, 94, 0.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 197, 94, 0.2) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+  opacity: var(--show-grid-overlay);
+  transition: opacity 0.3s ease;
+}
+
+/* Element highlighting feature */
+.highlight-elements {
+  transition: all 0.2s ease;
+}
+
+.highlight-elements:hover {
+  outline: 2px solid rgba(147, 51, 234, 0.6);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(147, 51, 234, 0.1);
+}
+
+/* Performance mode optimizations */
+.performance-mode {
+  will-change: auto;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Debug mode styles */
+.debug-mode {
+  outline: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.debug-mode::before {
+  content: attr(data-debug-info);
+  position: absolute;
+  top: -20px;
+  left: 0;
+  background: rgba(239, 68, 68, 0.9);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  white-space: nowrap;
+  z-index: 1000;
+}
+
+
+
+
+
 @layer base {
   :root {
-    --back-g: rgba(247, 246, 246, 1);
-    --background-2: rgba(217, 217, 217, 1);
-    --beige: rgba(153, 131, 121, 1);
-    --blue: rgba(27, 117, 186, 1);
-    --cta-2: rgba(83, 157, 214, 1);
-    --cta-dark: rgba(58, 145, 212, 1);
-    --d-9d-9d-9: rgba(82, 68, 155, 1);
-    --ooro: rgba(0, 0, 0, 1);
-    --teal-aqua: rgba(0, 223, 255, 1);
-    --text-2: rgba(255, 255, 255, 1);
-    
-    /* Font Variables */
-    --english-body-bold-font-family: "Noto Sans", Helvetica;
-    --english-body-bold-font-size: 16px;
-    --english-body-bold-font-style: normal;
-    --english-body-bold-font-weight: 700;
-    --english-body-bold-letter-spacing: 0px;
-    --english-body-bold-line-height: 24px;
-    
-    --english-body-medium-font-family: "Noto Sans", Helvetica;
-    --english-body-medium-font-size: 16px;
-    --english-body-medium-font-style: normal;
-    --english-body-medium-font-weight: 500;
-    --english-body-medium-letter-spacing: 0px;
-    --english-body-medium-line-height: 24px;
-    
-    --english-body-rugular-font-family: "Noto Sans", Helvetica;
-    --english-body-rugular-font-size: 16px;
-    --english-body-rugular-font-style: normal;
-    --english-body-rugular-font-weight: 400;
-    --english-body-rugular-letter-spacing: 0px;
-    --english-body-rugular-line-height: 24px;
-    
-    --english-body-semibold-font-family: "Noto Sans", Helvetica;
-    --english-body-semibold-font-size: 16px;
-    --english-body-semibold-font-style: normal;
-    --english-body-semibold-font-weight: 600;
-    --english-body-semibold-letter-spacing: 0px;
-    --english-body-semibold-line-height: 24px;
-    
-    --english-display-bold-font-family: "Noto Sans", Helvetica;
-    --english-display-bold-font-size: 56px;
-    --english-display-bold-font-style: normal;
-    --english-display-bold-font-weight: 700;
-    --english-display-bold-letter-spacing: 0px;
-    --english-display-bold-line-height: 84px;
-    
-    --english-display-medium-font-family: "Noto Sans", Helvetica;
-    --english-display-medium-font-size: 56px;
-    --english-display-medium-font-style: normal;
-    --english-display-medium-font-weight: 500;
-    --english-display-medium-letter-spacing: 0px;
-    --english-display-medium-line-height: 84px;
-    
-    --english-display-regular-font-family: "Noto Sans", Helvetica;
-    --english-display-regular-font-size: 56px;
-    --english-display-regular-font-style: normal;
-    --english-display-regular-font-weight: 400;
-    --english-display-regular-letter-spacing: 0px;
-    --english-display-regular-line-height: 84px;
-    
-    --english-display-semibold-font-family: "Noto Sans", Helvetica;
-    --english-display-semibold-font-size: 56px;
-    --english-display-semibold-font-style: normal;
-    --english-display-semibold-font-weight: 600;
-    --english-display-semibold-letter-spacing: 0px;
-    --english-display-semibold-line-height: 84px;
-    
-    --english-heading-bold-font-family: "Noto Sans", Helvetica;
-    --english-heading-bold-font-size: 32px;
-    --english-heading-bold-font-style: normal;
-    --english-heading-bold-font-weight: 700;
-    --english-heading-bold-letter-spacing: 0px;
-    --english-heading-bold-line-height: 48px;
-    
-    --english-heading-medium-font-family: "Noto Sans", Helvetica;
-    --english-heading-medium-font-size: 32px;
-    --english-heading-medium-font-style: normal;
-    --english-heading-medium-font-weight: 500;
-    --english-heading-medium-letter-spacing: 0px;
-    --english-heading-medium-line-height: 48px;
-    
-    --english-heading-regular-font-family: "Noto Sans", Helvetica;
-    --english-heading-regular-font-size: 32px;
-    --english-heading-regular-font-style: normal;
-    --english-heading-regular-font-weight: 400;
-    --english-heading-regular-letter-spacing: 0px;
-    --english-heading-regular-line-height: 48px;
-    
-    --english-heading-semibold-font-family: "Noto Sans", Helvetica;
-    --english-heading-semibold-font-size: 32px;
-    --english-heading-semibold-font-style: normal;
-    --english-heading-semibold-font-weight: 600;
-    --english-heading-semibold-letter-spacing: 0px;
-    --english-heading-semibold-line-height: 48px;
-    
-    --english-label-bold-font-family: "Noto Sans", Helvetica;
-    --english-label-bold-font-size: 14px;
-    --english-label-bold-font-style: normal;
-    --english-label-bold-font-weight: 700;
-    --english-label-bold-letter-spacing: 0px;
-    --english-label-bold-line-height: 20px;
-    
-    --english-label-medium-font-family: "Noto Sans", Helvetica;
-    --english-label-medium-font-size: 14px;
-    --english-label-medium-font-style: normal;
-    --english-label-medium-font-weight: 500;
-    --english-label-medium-letter-spacing: 0px;
-    --english-label-medium-line-height: 20px;
-    
-    --english-label-regular-font-family: "Noto Sans", Helvetica;
-    --english-label-regular-font-size: 14px;
-    --english-label-regular-font-style: normal;
-    --english-label-regular-font-weight: 400;
-    --english-label-regular-letter-spacing: 0px;
-    --english-label-regular-line-height: 20px;
-    
-    --english-label-semibold-font-family: "Noto Sans", Helvetica;
-    --english-label-semibold-font-size: 14px;
-    --english-label-semibold-font-style: normal;
-    --english-label-semibold-font-weight: 600;
-    --english-label-semibold-letter-spacing: 0px;
-    --english-label-semibold-line-height: 20px;
-    
-    --english-subtitle-bold-font-family: "Noto Sans", Helvetica;
-    --english-subtitle-bold-font-size: 20px;
-    --english-subtitle-bold-font-style: normal;
-    --english-subtitle-bold-font-weight: 700;
-    --english-subtitle-bold-letter-spacing: 0px;
-    --english-subtitle-bold-line-height: 28px;
-    
-    --english-subtitle-medium-font-family: "Noto Sans", Helvetica;
-    --english-subtitle-medium-font-size: 20px;
-    --english-subtitle-medium-font-style: normal;
-    --english-subtitle-medium-font-weight: 500;
-    --english-subtitle-medium-letter-spacing: 0px;
-    --english-subtitle-medium-line-height: 28px;
-    
-    --english-subtitle-regular-font-family: "Noto Sans", Helvetica;
-    --english-subtitle-regular-font-size: 20px;
-    --english-subtitle-regular-font-style: normal;
-    --english-subtitle-regular-font-weight: 400;
-    --english-subtitle-regular-letter-spacing: 0px;
-    --english-subtitle-regular-line-height: 28px;
-    
-    --english-subtitle-semibold-font-family: "Noto Sans", Helvetica;
-    --english-subtitle-semibold-font-size: 20px;
-    --english-subtitle-semibold-font-style: normal;
-    --english-subtitle-semibold-font-weight: 600;
-    --english-subtitle-semibold-letter-spacing: 0px;
-    --english-subtitle-semibold-line-height: 28px;
-    
-    --english-title-bold-font-family: "Noto Sans", Helvetica;
-    --english-title-bold-font-size: 24px;
-    --english-title-bold-font-style: normal;
-    --english-title-bold-font-weight: 700;
-    --english-title-bold-letter-spacing: 0px;
-    --english-title-bold-line-height: 32px;
-    
-    --english-title-medium-font-family: "Noto Sans", Helvetica;
-    --english-title-medium-font-size: 24px;
-    --english-title-medium-font-style: normal;
-    --english-title-medium-font-weight: 500;
-    --english-title-medium-letter-spacing: 0px;
-    --english-title-medium-line-height: 32px;
-    
-    --english-title-regular-font-family: "Noto Sans", Helvetica;
-    --english-title-regular-font-size: 24px;
-    --english-title-regular-font-style: normal;
-    --english-title-regular-font-weight: 400;
-    --english-title-regular-letter-spacing: 0px;
-    --english-title-regular-line-height: 32px;
-    
-    --english-title-semibold-font-family: "Noto Sans", Helvetica;
-    --english-title-semibold-font-size: 24px;
-    --english-title-semibold-font-style: normal;
-    --english-title-semibold-font-weight: 600;
-    --english-title-semibold-letter-spacing: 0px;
-    --english-title-semibold-line-height: 32px;
-    
-    --noto-sans-font-family: "Noto Sans", Helvetica;
-    --noto-sans-font-size: 16px;
-    --noto-sans-font-style: normal;
-    --noto-sans-font-weight: 400;
-    --noto-sans-letter-spacing: 0px;
-    --noto-sans-line-height: 24px;
-    
-    --text-font-family: "Noto Sans", Helvetica;
-    --text-font-size: 16px;
-    --text-font-style: normal;
-    --text-font-weight: 400;
-    --text-letter-spacing: 0px;
-    --text-line-height: 24px;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
   }
-
-  html, body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #221d3c 0%, rgba(92, 79, 162, 0.4) 100%);
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
   }
+}
 
-  /* Override background for admin pages */
-  html[data-page="admin"], 
-  body[data-page="admin"] {
-    background: white !important;
+
+
+@layer base {
+  * {
+    @apply border-border;
   }
-
   body {
-    font-family: 'Noto Sans', Helvetica, sans-serif;
-  }
-
-  button,
-  input,
-  select,
-  textarea {
-    @apply appearance-none bg-transparent border-0 outline-none;
+    @apply bg-background text-foreground;
   }
 }

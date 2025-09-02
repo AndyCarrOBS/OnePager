@@ -1,4 +1,4 @@
-// File: /home/andy/cursor/obs-cur/work/onpager/One-App/src/app/admin/page.js
+// File: /home/andy/cursor/obs-cur/work/onpager/One-App/src/app/admin/page.tsx
 import * as entry from '../../../../src/app/admin/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

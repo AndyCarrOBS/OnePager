@@ -1,4 +1,4 @@
-// File: /home/andy/cursor/obs-cur/work/onpager/One-App/src/app/api/debug-options/route.js
+// File: /home/andy/cursor/obs-cur/work/onpager/One-App/src/app/api/debug-options/route.ts
 import * as entry from '../../../../../src/app/api/debug-options/route.js'
 import type { NextRequest } from 'next/server.js'
 

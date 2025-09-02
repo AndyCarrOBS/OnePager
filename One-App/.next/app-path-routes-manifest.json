@@ -1,0 +1,8 @@
+{
+  "/_not-found/page": "/_not-found",
+  "/api/debug-options/update/route": "/api/debug-options/update",
+  "/api/debug-options/route": "/api/debug-options",
+  "/admin/page": "/admin",
+  "/admin2/page": "/admin2",
+  "/page": "/"
+}
