@@ -1,49 +1,102 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-interface UserExperienceSectionProps {
-  data: {
-    content: {
-      heading: string;
-      subtitle: string;
-      backgroundImage: {
-        src: string;
-        alt: string;
-      };
-      brandLogo: {
-        src: string;
-        alt: string;
-        width: number;
-        height: number;
-      };
-    };
-    styles: {
-      background: string;
-      shadow: string;
-      borderRadius: string;
-    };
-  };
+interface HomeEntertainmentData {
+  id: number;
+  title: string;
+  subtitle: string;
+  button_text: string;
+  button_url: string;
+  created_at: string;
+  updated_at: string;
 }
 
-export default function UserExperienceSection({ data }: UserExperienceSectionProps) {
-  // Debug logging
-  console.log('UserExperienceSection rendered with data:', data);
-  
-  // Fallback values if data is undefined
-  const heading = data?.content?.heading || 'First TV Platform For MENA (Fallback)';
-  const subtitle = data?.content?.subtitle || 'Stream, discover, and enjoy content in Arabic with OORO-powered devices designed for the Middle East and North Africa';
-  const imageSrc = data?.content?.backgroundImage?.src || '/img/1-2345685.png';
-  const imageAlt = data?.content?.backgroundImage?.alt || 'OORO TV Platform interface';
+export default function UserExperienceSection() {
+  const [data, setData] = useState<HomeEntertainmentData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fallback data in case database fails
+  const fallbackData: HomeEntertainmentData = {
+    id: 0,
+    title: 'First TV Platform For MENA',
+    subtitle: 'Stream, discover, and enjoy content in Arabic with OORO-powered devices designed for the Middle East and North Africa',
+    button_text: 'Explore OORO Devices',
+    button_url: '/devices',
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/api/home-entertainment');
+        if (!response.ok) {
+          throw new Error(`Failed to fetch data: ${response.status} ${response.statusText}`);
+        }
+        const content = await response.json();
+        setData(content);
+      } catch (err) {
+        console.error('Error fetching home entertainment data:', err);
+        setError(err instanceof Error ? err.message : 'An error occurred');
+        // Use fallback data instead of showing error
+        setData(fallbackData);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Use fallback data if no data from API
+  const displayData = data || fallbackData;
+
+  if (loading) {
+    return (
+      <section
+        style={{
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+          overflow: 'hidden',
+          padding: '32px 0 80px 0',
+          background: 'linear-gradient(135deg, #0e0614 0%, #1a0f2e 50%, #2d1b4e 100%)'
+        }}
+      >
+        <div style={{
+          position: 'relative',
+          zIndex: 20,
+          textAlign: 'center',
+          padding: '0 24px',
+          maxWidth: '72rem',
+          margin: '0 auto'
+        }}>
+          <div style={{
+            fontSize: '1.5rem',
+            color: 'white',
+            marginTop: '100px'
+          }}>
+            Loading...
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+
 
   return (
     <section
       style={{
         position: 'relative',
-        minHeight: '100vh',
         display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         overflow: 'hidden',
-        padding: '80px 0',
+        padding: '32px 0 80px 0',
         background: 'linear-gradient(135deg, #0e0614 0%, #1a0f2e 50%, #2d1b4e 100%)'
       }}
     >
@@ -69,20 +122,23 @@ export default function UserExperienceSection({ data }: UserExperienceSectionPro
           fontWeight: 'bold',
           color: 'white',
           marginBottom: '32px',
-          lineHeight: '1.2'
+          lineHeight: '1.2',
+          fontFamily: '"Noto Sans", Helvetica, sans-serif'
         }}>
-          {heading}
+          {displayData.title}
         </h1>
 
         {/* Subtitle */}
         <p style={{
-          fontSize: '1.25rem',
+          fontSize: '24px',
+          fontWeight: '400',
+          lineHeight: '36px',
           color: 'rgba(255, 255, 255, 0.9)',
           maxWidth: '64rem',
           margin: '0 auto 64px',
-          lineHeight: '1.6'
+          fontFamily: '"Noto Sans", Helvetica, sans-serif'
         }}>
-          {subtitle}
+          {displayData.subtitle}
         </p>
 
         {/* Central Image Display */}
@@ -124,17 +180,22 @@ export default function UserExperienceSection({ data }: UserExperienceSectionPro
                 justifyContent: 'center'
               }}>
                 <img
-                  src={imageSrc}
-                  alt={imageAlt}
+                  src="/img/1-2345685.png"
+                  alt="OORO TV Platform interface showing streaming content for MENA region"
                   style={{
                     width: '100%',
                     height: 'auto',
                     maxHeight: '500px',
-                    objectFit: 'contain',
+                    objectFit: 'cover',
                     borderRadius: '16px'
                   }}
-                  onError={(e) => console.error('Image failed to load:', imageSrc)}
-                  onLoad={() => console.log('Image loaded successfully:', imageSrc)}
+                  onError={(e) => {
+                    console.error('Image failed to load: /img/1-2345685.png');
+                    e.currentTarget.style.display = 'none';
+                  }}
+                  onLoad={() => {
+                    console.log('Image loaded successfully: /img/1-2345685.png');
+                  }}
                 />
               </div>
             </div>
@@ -143,46 +204,20 @@ export default function UserExperienceSection({ data }: UserExperienceSectionPro
 
         {/* Call to Action Button */}
         <div style={{ marginBottom: '48px' }}>
-          <button style={{
+          <a href={displayData.button_url} style={{
             background: '#9333ea',
             color: 'white',
             fontWeight: '600',
             padding: '16px 48px',
-            borderRadius: '9999px',
             fontSize: '1.25rem',
             border: 'none',
             cursor: 'pointer',
             boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-            transition: 'all 0.2s'
+            transition: 'all 0.2s',
+            textDecoration: 'none',
+            display: 'inline-block'
           }}>
-            Explore OORO Devices
-          </button>
-        </div>
-
-        {/* Bottom Links */}
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '24px',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}>
-          <a href="#streaming" style={{
-            color: 'rgba(255, 255, 255, 0.8)',
-            fontSize: '1.125rem',
-            fontWeight: '500',
-            textDecoration: 'none'
-          }}>
-            Start Streaming
-          </a>
-          <span style={{ color: 'rgba(255, 255, 255, 0.4)' }}>•</span>
-          <a href="#learn" style={{
-            color: 'rgba(255, 255, 255, 0.8)',
-            fontSize: '1.125rem',
-            fontWeight: '500',
-            textDecoration: 'none'
-          }}>
-            Learn More
+            {displayData.button_text}
           </a>
         </div>
       </div>

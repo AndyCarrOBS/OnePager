@@ -31,7 +31,20 @@ export function initDatabase(): void {
       )
     `);
 
-    // Insert initial data if table is empty
+    // Create home-entertainment table
+    db.exec(`
+      CREATE TABLE IF NOT EXISTS home_entertainment (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        subtitle TEXT NOT NULL,
+        button_text TEXT NOT NULL,
+        button_url TEXT NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    // Insert initial data if debug_options table is empty
     const count = db.prepare('SELECT COUNT(*) as count FROM debug_options').get() as { count: number };
     console.log(`Current debug options count: ${count.count}`);
     
@@ -61,10 +74,33 @@ export function initDatabase(): void {
     } else {
       console.log('Database already has data, skipping initialization');
     }
+
+    // Insert home entertainment content if table is empty
+    const homeCount = db.prepare('SELECT COUNT(*) as count FROM home_entertainment').get() as { count: number };
+    console.log(`Current home entertainment count: ${homeCount.count}`);
+    
+    if (homeCount.count === 0) {
+      const insertHome = db.prepare('INSERT OR IGNORE INTO home_entertainment (title, subtitle, button_text, button_url) VALUES (?, ?, ?, ?)');
+      
+      // Insert current content from the screen
+      insertHome.run(
+        'First TV Platform For MENA',
+        'Stream, discover, and enjoy content in Arabic with OORO-powered devices designed for the Middle East and North Africa',
+        'Explore OORO Devices',
+        '/devices'
+      );
+      
+      console.log('Database initialized with home entertainment content');
+    } else {
+      console.log('Home entertainment table already has data, skipping initialization');
+    }
     
     // Verify the data
     const options = getDebugOptions();
     console.log('Current debug options:', options);
+    
+    const homeContent = getHomeEntertainment();
+    console.log('Current home entertainment content:', homeContent);
     
   } catch (error) {
     console.error('Database initialization error:', error);
@@ -82,6 +118,19 @@ export function getDebugOptions(): DatabaseFeature[] {
   } catch (error) {
     console.error('Error getting debug options:', error);
     return [];
+  }
+}
+
+// Get home entertainment content
+export function getHomeEntertainment(): any {
+  try {
+    const stmt = db.prepare('SELECT * FROM home_entertainment ORDER BY id DESC LIMIT 1');
+    const result = stmt.get() as any;
+    console.log('Retrieved home entertainment content:', result);
+    return result;
+  } catch (error) {
+    console.error('Error getting home entertainment content:', error);
+    return null;
   }
 }
 

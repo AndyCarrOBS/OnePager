@@ -21,7 +21,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Material+Symbols+Outlined" rel="stylesheet" />
       </head>
-      <body>
+      <body suppressHydrationWarning={true}>
         <FeatureProvider>
           <MenuProvider>
             {children}

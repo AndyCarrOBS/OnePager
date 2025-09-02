@@ -2,15 +2,18 @@
 
 import MenuBar from '@/components/MenuBar';
 import UserExperienceSection from '@/components/UserExperienceSection';
-import { userExperienceSectionData } from '@/data/userExperienceSection';
+import KeyFeaturesSection from '@/components/KeyFeaturesSection';
 import { useFeatures } from '@/contexts/FeatureContext';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function HomePage() {
   const { isFeatureEnabled } = useFeatures();
+  const [isMounted, setIsMounted] = useState(false);
 
-  // Apply feature-based styling
+  // Apply feature-based styling only after component mounts
   useEffect(() => {
+    setIsMounted(true);
+    
     const root = document.documentElement;
     
     // Apply construction lines feature
@@ -62,13 +65,16 @@ export default function HomePage() {
       <MenuBar />
 
       {/* User Experience Section - Hero section under the menu */}
-      <div className="pt-[62px]">
-        <UserExperienceSection data={userExperienceSectionData} />
+      <div className="pt-[25px]">
+        <UserExperienceSection />
       </div>
+
+      {/* Key Features Section */}
+      <KeyFeaturesSection />
 
       {/* Body Section - Adjusted for absolute MenuBar */}
       <main className="relative z-10">
-        <div className={`max-w-7xl mx-auto px-4 py-12 ${isFeatureEnabled('construction-lines') ? 'construction-lines' : ''}`}>
+        <div className={`max-w-7xl mx-auto px-4 py-12 ${isMounted && isFeatureEnabled('construction-lines') ? 'construction-lines' : ''}`}>
           <div className="text-center">
             <h1 className="text-display-large font-bold text-white mb-6">
               Welcome to OnPager
@@ -79,7 +85,7 @@ export default function HomePage() {
             </p>
             
             {/* Div Lines Feature Indicator */}
-            {isFeatureEnabled('construction-lines') && (
+            {isMounted && isFeatureEnabled('construction-lines') && (
               <div className="mt-8 p-6 border-2 border-purple-300 bg-purple-50/20 rounded-xl">
                 <div className="flex items-center justify-center space-x-3 mb-3">
                   <div className="w-3 h-3 bg-purple-400 rounded-full animate-pulse"></div>
@@ -97,7 +103,7 @@ export default function HomePage() {
             )}
 
             {/* Menu Columns Feature Indicator */}
-            {isFeatureEnabled('menu-columns') && (
+            {isMounted && isFeatureEnabled('menu-columns') && (
               <div className="mt-6 p-6 border-2 border-green-300 bg-green-50/20 rounded-xl">
                 <div className="flex items-center justify-center space-x-3 mb-3">
                   <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
